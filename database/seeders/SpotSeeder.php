@@ -22,7 +22,9 @@ class SpotSeeder extends Seeder
             'latitude' => -46.459439,
             'longitude' => -67.501974,
             'images' => 'costanera',
-            'category_id' => 1
+            'category_id' => 1,
+            'created_at' => \Carbon\Carbon::now(),
+            'updated_at' => \Carbon\Carbon::now()
         ]);
 
         DB::table('spots')->insert([
@@ -33,7 +35,9 @@ class SpotSeeder extends Seeder
             'latitude' => -46.435206,
             'longitude' => -67.521230,
             'images' => 'mechenien',
-            'category_id' => 2
+            'category_id' => 2,
+            'created_at' => \Carbon\Carbon::now(),
+            'updated_at' => \Carbon\Carbon::now()
         ]);
         
     }

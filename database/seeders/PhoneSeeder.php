@@ -17,7 +17,9 @@ class PhoneSeeder extends Seeder
         DB::table('phones')->insert([
             'id' => 1,
             'spot_id' => 2,
-            'number' => '0297 485-1770'
+            'number' => '0297 485-1770',
+            'created_at' => \Carbon\Carbon::now(),
+            'updated_at' => \Carbon\Carbon::now()
         ]);
     }
 }
