@@ -18,7 +18,8 @@ class CreateSpotsTable extends Migration
             $table->string('name');
             $table->text('description');
             $table->string('address');
-            $table->point('geo');
+            $table->decimal('latitude', 8, 6);
+            $table->decimal('longitude', 9, 6);
             $table->string('images');
             $table->bigInteger('category_id')->unsigned();
             // valoration => calculada
