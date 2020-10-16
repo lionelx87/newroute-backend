@@ -15,8 +15,10 @@ class CreateSpotsTable extends Migration
     {
         Schema::create('spots', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('description');
+            $table->string('name_es');
+            $table->text('description_es');
+            $table->string('name_en');
+            $table->text('description_en');
             $table->string('address');
             $table->decimal('latitude', 8, 6);
             $table->decimal('longitude', 9, 6);
