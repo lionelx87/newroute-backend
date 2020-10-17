@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class SpotResource extends JsonResource
 {
@@ -32,7 +33,13 @@ class SpotResource extends JsonResource
             'address' => $this->address,
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
-            'images' => $this->images
+            'images' => $this->getImages($this->images)
         ];
+    }
+
+    private function getImages($path) {
+        return array_map(function($item){
+            return 'storage/' . $item;
+        }, Storage::disk('public')->files($path));
     }
 }
