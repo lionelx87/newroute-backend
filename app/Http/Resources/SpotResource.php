@@ -28,6 +28,7 @@ class SpotResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'name' => $this->name_es,
             'description' => $this->description_es,
             'address' => $this->address,

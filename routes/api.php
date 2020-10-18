@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SpotController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,3 +23,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/spots', [ SpotController::class, 'index' ]);
 
 Route::get('/spots/{spot}', [ SpotController::class, 'show' ]);
+
+Route::get('/categories', [ CategoryController::class, 'index' ]);
+
+Route::get('/categories/{category}', [CategoryController::class, 'show']);
+
+Route::get('/categories/{category}/spots', [ CategoryController::class, 'spots' ]);
