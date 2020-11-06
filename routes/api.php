@@ -22,7 +22,7 @@ use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 //     return $request->user();
 // });
 
-Route::get('/spots', [ SpotController::class, 'index' ])->middleware('auth:sanctum');
+Route::get('/spots', [ SpotController::class, 'index' ]);
 
 Route::get('/spots/{spot}', [ SpotController::class, 'show' ]);
 
