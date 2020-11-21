@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SpotController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
@@ -33,6 +34,8 @@ Route::get('/categories/{category}', [CategoryController::class, 'show']);
 Route::get('/categories/{category}/spots', [ CategoryController::class, 'spots' ]);
 
 Route::post('/register', [ RegisteredUserController::class, 'store']);
+
+Route::post('/recommend', [ UserController::class, 'recommend' ])->middleware('auth:sanctum');
 
 Route::group(['middleware' => ['web'] ], function () {
     Route::post('/login', [ AuthenticatedSessionController::class, 'store' ]);
