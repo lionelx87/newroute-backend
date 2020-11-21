@@ -32,6 +32,7 @@ class SpotResource extends JsonResource
             'name' => $this->name_es,
             'description' => $this->description_es,
             'address' => $this->address,
+            'phones' => new PhoneCollection($this->phones),
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
             'images' => $this->getImages($this->images)
