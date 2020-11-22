@@ -35,6 +35,8 @@ Route::get('/categories/{category}/spots', [ CategoryController::class, 'spots' 
 
 Route::post('/register', [ RegisteredUserController::class, 'store']);
 
+Route::post('/check', [ UserController::class, 'checkOptions'])->middleware('auth:sanctum');
+
 Route::post('/recommend', [ UserController::class, 'recommend' ])->middleware('auth:sanctum');
 
 Route::group(['middleware' => ['web'] ], function () {
