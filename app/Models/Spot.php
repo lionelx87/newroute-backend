@@ -13,6 +13,19 @@ class Spot extends Model
 {
     use HasFactory;
 
+    protected $appends = ['valoration'];
+
+    public function getValorationAttribute()
+    {
+        $query = Valoration::where('spot_id', $this->id);
+        $users = $query->count();
+        $valoration = $users > 0 ? $query->sum('rating') / $users : 0;
+        return [
+            'users' => $users,
+            'rating' => ceil($valoration)
+        ];
+    }
+
 
     public function videos()
     {
