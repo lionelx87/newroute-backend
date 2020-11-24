@@ -37,7 +37,8 @@ class SpotResource extends JsonResource
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
             'images' => $this->getImages($this->images),
-            'valoration' => $this->valoration
+            'valoration' => $this->valoration,
+            'comments' => $this->comments
         ];
     }
 

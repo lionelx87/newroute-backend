@@ -26,6 +26,11 @@ class Spot extends Model
         ];
     }
 
+    public function getCommentsAttribute()
+    {
+        return Comment::with('user')->where('spot_id', $this->id)->orderBy('created_at', 'desc')->get();
+    }
+
 
     public function videos()
     {
