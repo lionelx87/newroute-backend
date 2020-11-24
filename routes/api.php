@@ -41,6 +41,8 @@ Route::post('/recommend', [ UserController::class, 'recommend' ])->middleware('a
 
 Route::post('/rate', [UserController::class, 'rate'])->middleware('auth:sanctum');
 
+Route::post('/comment', [UserController::class, 'comment'])->middleware('auth:sanctum');
+
 Route::group(['middleware' => ['web'] ], function () {
     Route::post('/login', [ AuthenticatedSessionController::class, 'store' ]);
 });

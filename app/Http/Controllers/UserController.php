@@ -19,6 +19,11 @@ class UserController extends Controller
         auth()->user()->valorations()->attach($request->spot, [ 'rating' => $request->valoration ]);
     }
 
+    public function comment(Request $request)
+    {
+        auth()->user()->comments()->attach($request->spot, ['message' => $request->message]);
+    }  
+
     public function checkOptions(Request $request)
     {
         $recommend = auth()->user()->recommendations()->wherePivot('spot_id', $request->spot)->first();
