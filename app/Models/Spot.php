@@ -22,7 +22,7 @@ class Spot extends Model
         $valoration = $users > 0 ? $query->sum('rating') / $users : 0;
         return [
             'users' => $users,
-            'rating' => round($valoration, 1)
+            'rating' => number_format(round($valoration, 1), 1)
         ];
     }
 
