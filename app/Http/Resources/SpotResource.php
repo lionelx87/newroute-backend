@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Valoration;
 
 class SpotResource extends JsonResource
 {
@@ -32,9 +33,12 @@ class SpotResource extends JsonResource
             'name' => $this->name_es,
             'description' => $this->description_es,
             'address' => $this->address,
+            'phones' => new PhoneCollection($this->phones),
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
-            'images' => $this->getImages($this->images)
+            'images' => $this->getImages($this->images),
+            'valoration' => $this->valoration,
+            'comments' => $this->comments
         ];
     }
 

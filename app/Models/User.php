@@ -58,4 +58,26 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+
+    public function visits()
+    {
+        return $this->belongsToMany(Spot::class, 'visits')->withTimestamps(); // syncWithoutDetacking - detach 
+    }
+
+    public function recommendations()
+    {
+        return $this->belongsToMany(Spot::class, 'recommendations')->withTimestamps(); // syncWithoutDetacking - detach
+    }
+
+    public function valorations() 
+    {
+        return $this->belongsToMany(Spot::class, 'valorations')->withPivot('rating')->withTimestamps(); // attach($id, [ 'rating' => 5 ]) - detach($id)
+    }
+
+    public function comments()
+    {
+        return $this->belongsToMany(Spot::class, 'comments')->withPivot('message')->withTimestamps(); // attach($id, [ 'rating' => 5 ]) - detach($id)
+    }
+
 }

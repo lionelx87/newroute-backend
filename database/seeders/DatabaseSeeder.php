@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(SpotSeeder::class);
         $this->call(VideoSeeder::class);
         $this->call(PhoneSeeder::class);
+        $this->call(UserSeeder::class);
     }
 
     private function truncateTables(array $tables)
