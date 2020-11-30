@@ -43,5 +43,15 @@ class CategorySeeder extends Seeder
             'created_at' => \Carbon\Carbon::now(),
             'updated_at'  => \Carbon\Carbon::now()
         ]);
+
+        DB::table('categories')->insert([
+            'id' => 4,
+            'name_es' => 'atracción',
+            'description_es' => 'Atracciones Caletenses',
+            'name_en' => 'attraction',
+            'description_en' => 'Attractions in Caleta Olivia',
+            'created_at' => \Carbon\Carbon::now(),
+            'updated_at'  => \Carbon\Carbon::now()
+        ]);
     }
 }

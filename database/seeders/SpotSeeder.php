@@ -58,6 +58,36 @@ class SpotSeeder extends Seeder
             'created_at' => \Carbon\Carbon::now(),
             'updated_at' => \Carbon\Carbon::now()
         ]);
+
+        DB::table('spots')->insert([
+            'id' => 4,
+            'name_es' => 'El Gorosito',
+            'description_es' => 'El Monumento al Obrero Petrolero, conocido popular y erróneamente como El Gorosito, es una estatua en homenaje al obrero petrolero creada por el escultor Pablo Daniel Sánchez y el topógrafo José Cifuentes que se encuentra en el cruce de seis importantes avenidas de Caleta Olivia y fue inaugurado en 1969;1​ es el monumento más emblemático de la urbe caletense, usado actualmente como ícono cultural de la ciudad. La plazoleta y el entorno que lo rodean son el núcleo de la mayoría de las manifestaciones, fiestas, conmemoraciones y encuentros populares de la comunidad',
+            'name_en' => 'The Gorosito',
+            'description_en' => 'The Monument to the Petroleum Worker, popularly and mistakenly known as El Gorosito, is a statue in homage to the oil worker created by the sculptor Pablo Daniel Sánchez and the surveyor José Cifuentes that is located at the intersection of six important avenues of Caleta Olivia and was inaugurated in 1969; 1 is the most emblematic monument in the city of Caleta, currently used as a cultural icon of the city. The square and the surroundings that surround it are the nucleus of most of the demonstrations, parties, commemorations and popular gatherings of the community',
+            'address' => 'Av. San Martín 1',
+            'latitude' => -46.44177403010689,
+            'longitude' => -67.5173484438323,
+            'images' => 'gorosito',
+            'category_id' => 4,
+            'created_at' => \Carbon\Carbon::now(),
+            'updated_at' => \Carbon\Carbon::now()
+        ]);
+
+        DB::table('spots')->insert([
+            'id' => 5,
+            'name_es' => 'Muelle Caleta Olivia',
+            'description_es' => 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Debitis, esse consequuntur, nemo facilis rem commodi cumque repellat, aliquid labore in molestiae. Quis error quod, asperiores placeat incidunt et? Sunt, vel.',
+            'name_en' => 'Caleta Olivia Pier',
+            'description_en' => 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Debitis, esse consequuntur, nemo facilis rem commodi cumque repellat, aliquid labore in molestiae. Quis error quod, asperiores placeat incidunt et? Sunt, vel.',
+            'address' => 'Almirante Brown',
+            'latitude' => -46.43616892051069,
+            'longitude' => -67.51464220163045,
+            'images' => 'muelle',
+            'category_id' => 1,
+            'created_at' => \Carbon\Carbon::now(),
+            'updated_at' => \Carbon\Carbon::now()
+        ]);
         
     }
 }
