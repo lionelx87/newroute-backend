@@ -30,8 +30,8 @@ class UserController extends Controller
         $this->user_service->comment($request->spot, $request->message);
     }  
 
-    public function checkOptions(Request $request)
+    public function getOpinions(Request $request)
     {
-        return $this->user_service->checkOptions($request->spot);
+        return $this->user_service->getOpinions($request->spot);
     }
 }

@@ -20,7 +20,7 @@ class UserService
         auth()->user()->comments()->attach($spot, ['message' => $message]);
     }
 
-    public function checkOptions($spot)
+    public function getOpinions($spot)
     {
         $recommend = auth()->user()->recommendations()->wherePivot('spot_id', $spot)->first();
         $valoration = auth()->user()->valorations()->where('spot_id', $spot)->first();

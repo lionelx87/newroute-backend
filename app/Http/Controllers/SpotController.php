@@ -31,7 +31,7 @@ class SpotController extends Controller
         return new SpotResource($spot);
     }
 
-    public function recommendations()
+    public function getRecommendations()
     {
         return $this->spot_service->getRecommendations();
     }
