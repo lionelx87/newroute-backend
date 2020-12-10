@@ -27,6 +27,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role_id'
     ];
 
     /**
@@ -78,6 +79,11 @@ class User extends Authenticatable
     public function comments()
     {
         return $this->belongsToMany(Spot::class, 'comments')->withPivot('message')->withTimestamps(); // attach($id, [ 'rating' => 5 ]) - detach($id)
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
     }
 
 }
