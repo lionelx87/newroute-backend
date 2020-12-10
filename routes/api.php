@@ -35,7 +35,7 @@ Route::get('/categories/{category}/spots', [ CategoryController::class, 'spots' 
 
 Route::post('/register', [ RegisteredUserController::class, 'store']);
 
-Route::post('/check', [ UserController::class, 'checkOptions'])->middleware('auth:sanctum');
+Route::post('/opinions', [ UserController::class, 'getOpinions'])->middleware('auth:sanctum');
 
 Route::post('/recommend', [ UserController::class, 'recommend' ])->middleware('auth:sanctum');
 
@@ -43,7 +43,7 @@ Route::post('/rate', [UserController::class, 'rate'])->middleware('auth:sanctum'
 
 Route::post('/comment', [UserController::class, 'comment'])->middleware('auth:sanctum');
 
-Route::get('/recommendations', [ SpotController::class, 'recommendations' ]);
+Route::get('/recommendations', [ SpotController::class, 'getRecommendations' ]);
 
 Route::group(['middleware' => ['web'] ], function () {
     Route::post('/login', [ AuthenticatedSessionController::class, 'store' ]);
