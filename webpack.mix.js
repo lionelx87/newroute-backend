@@ -16,4 +16,13 @@ mix.js('resources/js/app.js', 'public/js')
         require('postcss-import'),
         require('tailwindcss'),
     ])
+    .copyDirectory('resources/images', 'public/images')
+    .browserSync({
+        proxy: 'http://newroute.backend',
+        watch: true,
+        watchOptions: {
+            usePolling: true,
+            interval: 500,
+        },
+    })
     .webpackConfig(require('./webpack.config'));
