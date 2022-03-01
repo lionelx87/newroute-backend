@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->truncateTables(['categories', 'spots']);
+        $this->truncateTables(['categories', 'spots', 'users']);
         $this->call(CategorySeeder::class);
         $this->call(SpotSeeder::class);
         $this->call(VideoSeeder::class);
