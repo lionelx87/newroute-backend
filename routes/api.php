@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SpotController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthenticationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
@@ -47,4 +48,10 @@ Route::get('/recommendations', [ SpotController::class, 'getRecommendations' ]);
 
 Route::group(['middleware' => ['web'] ], function () {
     Route::post('/login', [ AuthenticatedSessionController::class, 'store' ]);
+});
+
+Route::prefix('user')->group( function() {
+    Route::post('/reset-password-token', [ AuthenticationController::class, 'resetPassword' ])->name('api-reset-password-token');
+    Route::post('/forgot-password', [ AuthenticationController::class, 'sendPasswordResetToken' ])->name('api-reset-password');
+    Route::post('/new-password', [ AuthenticationController::class, 'setNewAccountPassword' ])->name('new-account-password');
 });

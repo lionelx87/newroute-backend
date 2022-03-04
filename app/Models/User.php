@@ -8,15 +8,18 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements CanResetPasswordContract 
 {
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use CanResetPassword;
 
     /**
      * The attributes that are mass assignable.
@@ -85,5 +88,18 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
+
+    // public function sendPasswordResetLink()
+    // {
+    //     do {
+    //         // $token = $this->getResetCode();
+    //         $token = 'V95865';
+    //         $signature = hash('md5', $token);
+    //         $exists = $this->where([
+    //             [ 'user_id', $this->id],
+    //             [ 'token_signature', $signature ]
+    //         ])->exists();
+    //     }while($exists);
+    // }
 
 }
