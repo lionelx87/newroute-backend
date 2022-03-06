@@ -70,41 +70,48 @@ class AuthenticationController extends Controller
     {
         $resetToken = ResetPassword::where([
             ['token_signature', hash('md5', $data['password_reset_code'])],
-            ['token_type', '10']
+            ['token_type', ResetPassword::PASSWORD_RESET_TOKEN]
         ])->first();
         if($resetToken === null || $resetToken->count() <= 0)
         {
-            return 'Invalid password reset code';
+            return response()->json([
+                'status' => 404,
+                'message' => 'invalid password reset code'
+            ]);
         }
         if(Carbon::now()->greaterThan($resetToken->expires_at))
         {
-            return 'the password reset code given has expired';
+            return response()->json([
+                'status' => 404,
+                'message' => 'the password reset code given has expired'
+            ]);
         }
-        // $reset_token = $resetToken->getResetIdentifierCode(); // completar
-        $reset_token = $this->getResetIdentifierCode(); // completar
-        return $reset_token;
-        // if($reset_token)
-        // {
-        //     $resetToken->update([
-        //         'expires_at' => Carbon::now(),
-        //     ]);
-        //     return [
-        //         'token' => $reset_token
-        //     ];
-        // }else {
-        //     return 'error!';
-        // }
+        $reset_token = $this->getResetIdentifierCode();
+        if($reset_token)
+        {
+            $resetToken->update([
+                'expires_at' => Carbon::now(),
+            ]);
+            return response()->json([
+                'token' => $reset_token
+            ]);
+        }else {
+            return response()->json([
+                'status' => 404,
+                'message' => 'an error occurred while generating the token'
+            ]);
+        }
     }
 
     private function getResetIdentifierCode()
     {
-        $token = 'V95867';
+        $token = Str::random(100);
         try {
             ResetPassword::create([
-                'user_id' => 5,
+                'user_id' => 5, // obtener dinamicamente
                 'token_signature' => hash('md5', $token),
-                'used_token' => 2,
-                'token_type' => 11,
+                'used_token' => 2, // ?
+                'token_type' => ResetPassword::PASSWORD_VERIFY_TOKEN,
                 'expires_at' => Carbon::now()->addMinutes(30),
             ]);
             return $token;
@@ -113,6 +120,7 @@ class AuthenticationController extends Controller
         }
     }
 
+    // PASO 3
     public function setNewAccountPassword(Request $request)
     {
         $rules = [
