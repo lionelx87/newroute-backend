@@ -71,7 +71,7 @@ class AuthenticationController extends Controller
     public function validatePasswordResetToken(Request $data)
     {
         $resetToken = ResetPassword::where([
-            ['token_signature', hash('md5', $data['password_reset_code'])],
+            ['token_signature', hash('md5', $data['code'])],
             ['token_type', ResetPassword::PASSWORD_RESET_TOKEN]
         ])->first();
         if($resetToken === null || $resetToken->count() <= 0)
