@@ -23,7 +23,9 @@ class AuthenticationController extends Controller
 
         if($validator->fails())
         {
-            return $validator->errors()->all();
+            return response()->json([
+                'errors' => $validator->errors()->all()
+            ], 500);
         }
         
         $data = $validator->validated();
@@ -39,7 +41,7 @@ class AuthenticationController extends Controller
         return response()->json([
             'status' => 502,
             'message' => 'no se ha podido enviar el token de restablecimiento de contraseña. Por favor intente nuevamente en unos segundos'
-        ]);
+        ], 500);
     }
 
      private function sendPasswordResetLink($user)
@@ -77,14 +79,14 @@ class AuthenticationController extends Controller
             return response()->json([
                 'status' => 404,
                 'message' => 'invalid password reset code'
-            ]);
+            ], 500);
         }
         if(Carbon::now()->greaterThan($resetToken->expires_at))
         {
             return response()->json([
                 'status' => 404,
                 'message' => 'the password reset code given has expired'
-            ]);
+            ], 500);
         }
         $reset_token = $this->getResetIdentifierCode($resetToken);
         if($reset_token)
@@ -99,7 +101,7 @@ class AuthenticationController extends Controller
             return response()->json([
                 'status' => 404,
                 'message' => 'an error occurred while generating the token'
-            ]);
+            ], 500);
         }
     }
 
@@ -130,7 +132,9 @@ class AuthenticationController extends Controller
         $validator = Validator::make($request->all(), $rules);
         if($validator->fails())
         {
-            return $validator->errors()->all();
+            return response()->json([
+                'errors' => $validator->errors()->all()
+            ], 500);
         }
         $data = $validator->validated();
         
@@ -144,7 +148,7 @@ class AuthenticationController extends Controller
             return response()->json([
                 'status' => 404,
                 'message' => 'invalid token for resetting password'
-            ]);
+            ], 500);
         }
         
         $user = User::where([
@@ -156,13 +160,13 @@ class AuthenticationController extends Controller
             return response()->json([
                 'status' => 404,
                 'message' => 'token does not correspond to any existing user'
-            ]);
+            ], 500);
         }else if (Carbon::now()->greaterThan($verifyToken[0]->expires_at))
         {
             return response()->json([
                 'status' => 404,
                 'message' => 'the reset password token has expired'
-            ]);
+            ], 500);
         }
         $new_password = Hash::make($data['password']);
         $user->password = $new_password;
