@@ -14,6 +14,8 @@ class ResetPassword extends Model
     protected $fillable = [
         'user_id',
         'token_signature',
+        'used_token',
+        'token_type',
         'expires_at'
     ];
 

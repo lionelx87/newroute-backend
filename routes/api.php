@@ -51,7 +51,7 @@ Route::group(['middleware' => ['web'] ], function () {
 });
 
 Route::prefix('user')->group( function() {
-    Route::post('/reset-password-token', [ AuthenticationController::class, 'resetPassword' ])->name('api-reset-password-token');
     Route::post('/forgot-password', [ AuthenticationController::class, 'sendPasswordResetToken' ])->name('api-reset-password');
+    Route::post('/reset-password-token', [ AuthenticationController::class, 'validatePasswordResetToken' ])->name('api-reset-password-token');
     Route::post('/new-password', [ AuthenticationController::class, 'setNewAccountPassword' ])->name('new-account-password');
 });
