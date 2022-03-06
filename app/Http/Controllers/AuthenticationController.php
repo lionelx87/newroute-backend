@@ -9,6 +9,7 @@ use App\Models\ResetPassword;
 use Carbon\Carbon;
 use App\Notifications\APIPasswordResetNotification;
 use Hash;
+use Illuminate\Support\Str;
 
 class AuthenticationController extends Controller
 {
@@ -22,22 +23,29 @@ class AuthenticationController extends Controller
 
         if($validator->fails())
         {
-            // return $this->errorMessage(true, $validator->errors()->all());
             return $validator->errors()->all();
         }
         
         $data = $validator->validated();
         $user = User::where('email', $data['email'])->first();
         $reset_link_sent = $this->sendPasswordResetLink($user);
-        return $reset_link_sent;
-
+        if($reset_link_sent) 
+        {
+            return response()->json([
+                'status' => 200,
+                'message' => 'se ha enviado un token de restablecimiento de contraseña a su correo electrónico'
+            ]);
+        }
+        return response()->json([
+            'status' => 502,
+            'message' => 'no se ha podido enviar el token de restablecimiento de contraseña. Por favor intente nuevamente en unos segundos'
+        ]);
     }
 
      private function sendPasswordResetLink($user)
     {
         do {
-            // $token = $this->getResetCode();
-            $token = 'V95865';
+            $token = Str::random(8);
             $signature = hash('md5', $token);
             $exists = ResetPassword::where([
                 [ 'user_id', $user->id],
