@@ -25,6 +25,24 @@ class SpotService
         return $recommendations;
     }
 
+    public function getValorations()
+    {
+        $valorations = DB::table('valorations')
+            ->select('spot_id', 'spots.name_es as name', 'spots.images', 'categories.name_es as category', DB::raw('sum(rating) / count(*) as rating'))
+            ->join('spots', 'spots.id', '=', 'spot_id')
+            ->join('categories', 'categories.id', '=', 'spots.category_id')
+            ->groupBy('spot_id')
+            ->orderBy('rating', 'desc')
+            ->take(3)
+            ->get();
+
+        foreach ($valorations as $valoration) {
+            $valoration->images = $this->getImages($valoration->images);
+        }
+
+        return $valorations;
+    }
+
     private function getImages($path)
     {
         return array_map(function ($item) {

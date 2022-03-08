@@ -46,6 +46,8 @@ Route::post('/comment', [UserController::class, 'comment'])->middleware('auth:sa
 
 Route::get('/recommendations', [ SpotController::class, 'getRecommendations' ]);
 
+Route::get('/valorations', [ SpotController::class, 'getValorations' ]);
+
 Route::group(['middleware' => ['web'] ], function () {
     Route::post('/login', [ AuthenticatedSessionController::class, 'store' ]);
 });

@@ -35,5 +35,10 @@ class SpotController extends Controller
     {
         return $this->spot_service->getRecommendations();
     }
+
+    public function getValorations()
+    {
+        return $this->spot_service->getValorations();
+    }
     
 }
