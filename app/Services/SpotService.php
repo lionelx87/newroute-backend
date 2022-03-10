@@ -28,7 +28,7 @@ class SpotService
     public function getValorations()
     {
         $valorations = DB::table('valorations')
-            ->select('spot_id', 'spots.name_es as name', 'spots.images', 'categories.name_es as category', DB::raw('sum(rating) / count(*) as rating, count(*) as users'))
+            ->select('spot_id', 'spots.name_es as name', 'spots.images', 'categories.name_es as category', DB::raw('cast(sum(rating) / count(*) as decimal(2,1)) as rating, count(*) as users'))
             ->join('spots', 'spots.id', '=', 'spot_id')
             ->join('categories', 'categories.id', '=', 'spots.category_id')
             ->groupBy('spot_id')
