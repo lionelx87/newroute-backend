@@ -44,6 +44,10 @@ Route::post('/rate', [UserController::class, 'rate'])->middleware('auth:sanctum'
 
 Route::post('/comment', [UserController::class, 'comment'])->middleware('auth:sanctum');
 
+Route::post('/visits', [UserController::class, 'visits'])->middleware('auth:sanctum');
+
+Route::get('/visits', [UserController::class, 'getVisits'])->middleware('auth:sanctum');
+
 Route::get('/recommendations', [ SpotController::class, 'getRecommendations' ]);
 
 Route::get('/valorations', [ SpotController::class, 'getValorations' ]);

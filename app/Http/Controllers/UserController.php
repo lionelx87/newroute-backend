@@ -34,4 +34,14 @@ class UserController extends Controller
     {
         return $this->user_service->getOpinions($request->spot);
     }
+
+    public function visits(Request $request)
+    {
+        return $this->user_service->visits($request->visits);
+    }
+
+    public function getVisits(Request $request)
+    {
+        return $this->user_service->getVisits();
+    }
 }

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Video;
 use App\Models\Phone;
 use App\Models\Category;
+use Carbon\Carbon;
 
 
 class Spot extends Model
@@ -45,6 +46,11 @@ class Spot extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function getCreatedAtAttribute($value)
+    {
+        return Carbon::parse($this->pivot->created_at)->diffForHumans();
     }
 
 }

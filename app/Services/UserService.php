@@ -29,4 +29,19 @@ class UserService
             'valoration' => !empty($valoration) ? $valoration->pivot->rating : 0
         ], 200);
     }
+
+    public function visits($visits)
+    {
+        foreach ($visits as $visit) {
+            auth()->user()->visits()->attach($visit);
+        }
+    }
+
+    public function getVisits()
+    {
+        $user_id = auth()->user()->id;
+        return response()->json([
+            'visits' => auth()->user()->visits()->wherePivot('user_id', $user_id)->get()
+        ]);
+    }
 }
