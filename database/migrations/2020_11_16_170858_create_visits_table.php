@@ -14,6 +14,7 @@ class CreateVisitsTable extends Migration
     public function up()
     {
         Schema::create('visits', function (Blueprint $table) {
+            $table->id();
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('spot_id')->unsigned();
             

@@ -14,7 +14,7 @@ class Spot extends Model
 {
     use HasFactory;
 
-    protected $appends = ['valoration'];
+    protected $appends = ['valoration', 'diff_for_humans'];
 
     public function getValorationAttribute()
     {
@@ -48,7 +48,7 @@ class Spot extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function getCreatedAtAttribute($value)
+    public function getDiffForHumansAttribute($value)
     {
         return Carbon::parse($this->pivot->created_at)->diffForHumans();
     }
