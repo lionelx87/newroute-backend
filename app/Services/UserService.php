@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class UserService 
 {
@@ -50,9 +51,20 @@ class UserService
     public function getVisits()
     {
         $user_id = auth()->user()->id;
+        $visits = auth()->user()->visits()->wherePivot('user_id', $user_id)->get();
+        foreach ($visits as $visit) {
+            $visit->images = $this->getImages($visit->images);
+        }
         return response()->json([
             // TODO: send less information
-            'visits' => auth()->user()->visits()->wherePivot('user_id', $user_id)->get()
+            'visits' => $visits
         ]);
+    }
+
+    private function getImages($path)
+    {
+        return array_map(function ($item) {
+            return 'storage/' . $item;
+        }, Storage::disk('public')->files($path));
     }
 }
