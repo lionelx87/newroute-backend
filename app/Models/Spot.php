@@ -7,13 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Video;
 use App\Models\Phone;
 use App\Models\Category;
+use Carbon\Carbon;
 
 
 class Spot extends Model
 {
     use HasFactory;
 
-    protected $appends = ['valoration'];
+    protected $appends = ['valoration', 'diff_for_humans'];
 
     public function getValorationAttribute()
     {
@@ -45,6 +46,11 @@ class Spot extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function getDiffForHumansAttribute($value)
+    {
+        return Carbon::parse($this->pivot->created_at)->diffForHumans();
     }
 
 }

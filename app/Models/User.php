@@ -66,7 +66,7 @@ class User extends Authenticatable implements CanResetPasswordContract
 
     public function visits()
     {
-        return $this->belongsToMany(Spot::class, 'visits')->withTimestamps(); // syncWithoutDetacking - detach 
+        return $this->belongsToMany(Spot::class, 'visits')->withPivot('id')->withTimestamps(); // syncWithoutDetacking - detach 
     }
 
     public function recommendations()
