@@ -34,7 +34,7 @@ class UserService
 
     public function visits($visits)
     {
-        foreach ($visits as $visit) {
+        foreach (json_decode($visits) as $visit) {
             $last_visit = auth()->user()->visits->where('id', $visit)->last();
             if(!empty($last_visit))
             {
