@@ -9,8 +9,10 @@ class SpotService
 {
     public function getRecommendations()
     {
+        $spot_name = 'spots.name_'.( request('lang') ?? "es" ).' as name';
+        $category_name = 'categories.name_'.( request('lang') ?? "es" ).' as category';
         $recommendations = DB::table('recommendations')
-            ->select('spot_id', 'spots.name_es as name', 'spots.images', 'categories.name_es as category', DB::raw('count(*) as total'))
+            ->select('spot_id', $spot_name, 'spots.images', $category_name, DB::raw('count(*) as total'))
             ->join('spots', 'spots.id', '=', 'spot_id')
             ->join('categories', 'categories.id', '=', 'spots.category_id')
             ->groupBy('spot_id')
@@ -27,8 +29,10 @@ class SpotService
 
     public function getValorations()
     {
+        $spot_name = 'spots.name_'.( request('lang') ?? "es" ).' as name';
+        $category_name = 'categories.name_'.( request('lang') ?? "es" ).' as category';
         $valorations = DB::table('valorations')
-            ->select('spot_id', 'spots.name_es as name', 'spots.images', 'categories.name_es as category', DB::raw('cast(sum(rating) / count(*) as decimal(2,1)) as rating, count(*) as users'))
+            ->select('spot_id', $spot_name, 'spots.images', $category_name, DB::raw('cast(sum(rating) / count(*) as decimal(2,1)) as rating, count(*) as users'))
             ->join('spots', 'spots.id', '=', 'spot_id')
             ->join('categories', 'categories.id', '=', 'spots.category_id')
             ->groupBy('spot_id')
