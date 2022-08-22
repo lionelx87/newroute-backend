@@ -16,8 +16,8 @@ class CategoryResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name_es,
-            'description' => $this->description_es
+            'name' => $this["name_".($request->lang ?? "es")],
+            'description' => $this["description_".($request->lang ?? "es")],
         ];
     }
 }
