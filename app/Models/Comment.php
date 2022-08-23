@@ -16,6 +16,7 @@ class Comment extends Pivot
 
     public function getCreatedAtAttribute($value)
     {
+        Carbon::setlocale(request('lang') ?? 'es');
         return Carbon::parse($value)->diffForHumans();
     }
 }
