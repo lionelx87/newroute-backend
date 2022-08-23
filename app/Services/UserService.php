@@ -54,6 +54,8 @@ class UserService
         $visits = auth()->user()->visits()->wherePivot('user_id', $user_id)->get();
         foreach ($visits as $visit) {
             $visit->images = $this->getImages($visit->images);
+            $visit->name = $visit["name_".(request('lang') ?? "es")];
+            $visit->description = $visit["description_".(request('lang') ?? "es")];
         }
         return response()->json([
             // TODO: send less information
