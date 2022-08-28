@@ -66,22 +66,24 @@ class AuthenticatedSessionController extends Controller
 
     public function creatorLogin(Request $request)
     {
-        // $this->validate($request, [
-        //     'email'   => 'required|email',
-        //     'password' => 'required|min:6'
-        // ]);
+        $attr = request()->validate([
+            'email' => 'required',
+            'password' => 'required'
+        ]);
 
-        if (Auth::guard('creator')->attempt(['email' => $request->email, 'password' => $request->password])) {
-
+        if(!Auth::guard('creator')->attempt( $attr ))
+        {
             return response()->json([
-                'user' => Auth::guard('creator')->user(),
-                'token' => Auth::guard('creator')->user()->createToken('API Token')->plainTextToken,
-                'status' => 'ok!'
-            ]);
+                'status' => 401,
+                'message' => 'Credentials not match'
+            ], 401);
         }
+
+        $user = auth()->guard('creator')->user();
+        $user->token = $user->createToken('backoffice')->plainTextToken;
+
         return response()->json([
-            'status' => 401,
-            'message' => 'Credentials not match'
+            'user' => $user
         ]);
     }
 
