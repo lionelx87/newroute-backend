@@ -6,7 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthenticationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
+use App\Http\Controllers\AuthenticatedSessionController;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 
 /*
@@ -54,6 +54,7 @@ Route::get('/valorations', [ SpotController::class, 'getValorations' ]);
 
 Route::group(['middleware' => ['web'] ], function () {
     Route::post('/login', [ AuthenticatedSessionController::class, 'store' ]);
+    Route::post('/login-creators', [ AuthenticatedSessionController::class, 'creatorLogin' ]);
 });
 
 Route::prefix('user')->group( function() {
