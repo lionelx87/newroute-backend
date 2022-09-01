@@ -32,6 +32,7 @@ class SpotResource extends JsonResource
             'id' => $this->id,
             'name' => $this["name_".($request->lang ?? "es")],
             'description' => $this["description_".($request->lang ?? "es")],
+            'category' => new CategoryResource($this->category),
             'address' => $this->address,
             'phones' => new PhoneCollection($this->phones),
             'latitude' => $this->latitude,
