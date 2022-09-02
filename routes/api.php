@@ -28,6 +28,8 @@ Route::get('/spots', [ SpotController::class, 'index' ]);
 
 Route::get('/spots/{spot}', [ SpotController::class, 'show' ]);
 
+Route::delete('/spots/{spot}', [ SpotController::class, 'destroy' ])->middleware('auth:sanctum,creator');
+
 Route::get('/categories', [ CategoryController::class, 'index' ]);
 
 Route::get('/categories/{category}', [CategoryController::class, 'show']);

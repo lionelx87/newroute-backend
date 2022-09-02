@@ -31,6 +31,11 @@ class SpotController extends Controller
         return new SpotResource($spot);
     }
 
+    public function destroy(Spot $spot)
+    {
+        return $this->spot_service->delete($spot);
+    }
+
     public function getRecommendations()
     {
         return $this->spot_service->getRecommendations();

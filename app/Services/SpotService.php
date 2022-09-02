@@ -53,4 +53,18 @@ class SpotService
             return 'storage/' . $item;
         }, Storage::disk('public')->files($path));
     }
+
+    public function delete($spot)
+    {
+        try{
+            $spot->delete();
+            return response()->json([
+                'status' => 200
+            ], 200);
+        }catch(\Exception $e) {
+            return response()->json([
+                'status' => 500
+            ], 500);
+        }
+    }
 }
