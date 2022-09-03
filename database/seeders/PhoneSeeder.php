@@ -21,5 +21,13 @@ class PhoneSeeder extends Seeder
             'created_at' => \Carbon\Carbon::now(),
             'updated_at' => \Carbon\Carbon::now()
         ]);
+
+        DB::table('phones')->insert([
+            'id' => 2,
+            'spot_id' => 2,
+            'number' => '0297 155489632',
+            'created_at' => \Carbon\Carbon::now(),
+            'updated_at' => \Carbon\Carbon::now()
+        ]);
     }
 }
