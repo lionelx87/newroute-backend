@@ -7,6 +7,7 @@ use App\Http\Resources\SpotResource;
 use App\Models\Spot;
 use App\Models\Recommendation;
 use App\Services\SpotService;
+use App\Http\Requests\StoreSpotRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -29,6 +30,17 @@ class SpotController extends Controller
     public function show(Spot $spot)
     {
         return new SpotResource($spot);
+    }
+
+    public function store(StoreSpotRequest $request)
+    {
+        // return $request->file('files')->store('app/public/img/uploads');
+        foreach($request->file('files') as $image)
+        {
+            // $image->store('app/public/img/uploads');
+            Storage::disk('local')->put('public/images', $image);
+        }
+    
     }
 
     public function destroy(Spot $spot)
