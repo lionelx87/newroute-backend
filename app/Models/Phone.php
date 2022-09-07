@@ -10,6 +10,11 @@ class Phone extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'spot_id',
+        'number'
+    ];
+
     public function spot()
     {
         return $this->belongsTo(Spot::class);

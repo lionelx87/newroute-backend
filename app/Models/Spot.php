@@ -16,6 +16,18 @@ class Spot extends Model
 
     protected $appends = ['valoration', 'diff_for_humans'];
 
+    protected $fillable = [
+        'name_es',
+        'name_en',
+        'description_es',
+        'description_en',
+        'address',
+        'latitude',
+        'longitude',
+        'images',
+        'category_id'
+    ];
+
     public function getValorationAttribute()
     {
         $query = Valoration::where('spot_id', $this->id);

@@ -34,13 +34,7 @@ class SpotController extends Controller
 
     public function store(StoreSpotRequest $request)
     {
-        // return $request->file('files')->store('app/public/img/uploads');
-        foreach($request->file('files') as $image)
-        {
-            // $image->store('app/public/img/uploads');
-            Storage::disk('local')->put('public/images', $image);
-        }
-    
+        return $this->spot_service->store( $request );
     }
 
     public function destroy(Spot $spot)
