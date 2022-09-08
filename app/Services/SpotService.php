@@ -97,9 +97,11 @@ class SpotService
 
         Storage::disk('local')->makeDirectory('public/'.$spot->images);
 
-        foreach($request->file('files') as $image)
-        {
-            Storage::disk('local')->put('public/'.$spot->images, $image);
+        if($request->hasFile('files')) {
+            foreach($request->file('files') as $image)
+            {
+                Storage::disk('local')->put('public/'.$spot->images, $image);
+            }
         }
 
         return response()->json([
