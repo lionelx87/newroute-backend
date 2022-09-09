@@ -4,6 +4,8 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Spot;
+use App\Models\Phone;
 
 class SpotService 
 {
@@ -57,7 +59,9 @@ class SpotService
     public function delete($spot)
     {
         try{
+            $images = $spot->images;
             $spot->delete();
+            Storage::deleteDirectory('public/'.$images);
             return response()->json([
                 'status' => 200
             ], 200);
@@ -66,5 +70,42 @@ class SpotService
                 'status' => 500
             ], 500);
         }
+    }
+
+    public function store($request)
+    {
+        $spot = Spot::create([
+            'name_es' => $request->name_es,
+            'name_en' => $request->name_en,
+            'description_es' => $request->description_es,
+            'description_en' => $request->description_en,
+            'address' => $request->address,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'images' => $request->images,
+            'category_id' => $request->category_id
+        ]);
+
+        $phones = strlen($request->phones) > 0 ? array_map('trim', explode(",", $request->phones)) : [];
+
+        foreach ($phones as $phone) {
+            Phone::create([
+                'spot_id' => $spot->id,
+                'number' => $phone
+            ]);
+        }
+
+        Storage::disk('local')->makeDirectory('public/'.$spot->images);
+
+        if($request->hasFile('files')) {
+            foreach($request->file('files') as $image)
+            {
+                Storage::disk('local')->put('public/'.$spot->images, $image);
+            }
+        }
+
+        return response()->json([
+            'status' => 201
+        ], 201);
     }
 }
