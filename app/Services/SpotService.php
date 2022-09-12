@@ -74,38 +74,94 @@ class SpotService
 
     public function store($request)
     {
-        $spot = Spot::create([
-            'name_es' => $request->name_es,
-            'name_en' => $request->name_en,
-            'description_es' => $request->description_es,
-            'description_en' => $request->description_en,
-            'address' => $request->address,
-            'latitude' => $request->latitude,
-            'longitude' => $request->longitude,
-            'images' => $request->images,
-            'category_id' => $request->category_id
-        ]);
-
-        $phones = strlen($request->phones) > 0 ? array_map('trim', explode(",", $request->phones)) : [];
-
-        foreach ($phones as $phone) {
-            Phone::create([
-                'spot_id' => $spot->id,
-                'number' => $phone
+        return DB::transaction(function () use($request) {
+            $spot = Spot::create([
+                'name_es' => $request->name_es,
+                'name_en' => $request->name_en,
+                'description_es' => $request->description_es,
+                'description_en' => $request->description_en,
+                'address' => $request->address,
+                'latitude' => $request->latitude,
+                'longitude' => $request->longitude,
+                'images' => $request->images,
+                'category_id' => $request->category_id
             ]);
-        }
-
-        Storage::disk('local')->makeDirectory('public/'.$spot->images);
-
-        if($request->hasFile('files')) {
-            foreach($request->file('files') as $image)
-            {
-                Storage::disk('local')->put('public/'.$spot->images, $image);
+    
+            $phones = strlen($request->phones) > 0 ? array_map('trim', explode(",", $request->phones)) : [];
+    
+            foreach ($phones as $phone) {
+                Phone::create([
+                    'spot_id' => $spot->id,
+                    'number' => $phone
+                ]);
             }
-        }
+    
+            $spot->images = $spot->id.'-'.$request->images;
+            $spot->save();
+    
+            Storage::disk('local')->makeDirectory('public/'.$spot->images);
+    
+            if($request->hasFile('files')) {
+                foreach($request->file('files') as $image)
+                {
+                    Storage::disk('local')->put('public/'.$spot->images, $image);
+                }
+            }
+    
+            return response()->json([
+                'status' => 201
+            ], 201);            
+        });
+    }
 
-        return response()->json([
-            'status' => 201
-        ], 201);
+    public function update($request, $spot)
+    {
+        return DB::transaction(function () use($request, $spot) {
+            $spot->update([
+                'name_es' => $request->name_es,
+                'description_es' => $request->description_es,
+                'name_en' => $request->name_en,
+                'description_en' => $request->description_en,
+                'address' => $request->address,
+                'latitude' => $request->latitude,
+                'longitude' => $request->longitude,
+                'category_id' => $request->category_id
+            ]);
+    
+            $phones = strlen($request->phones) > 0 ? array_map('trim', explode(",", $request->phones)) : [];
+    
+            Phone::where('spot_id', $spot->id)->delete();
+    
+            foreach ($phones as $phone) {
+                Phone::create([
+                    'spot_id' => $spot->id,
+                    'number' => $phone
+                ]);
+            }
+    
+            $old_directory = 'public/'.$spot->images;
+            $new_directory = 'public/'.$spot->id.'-'.$request->images;
+    
+            Storage::delete(Storage::allFiles($old_directory));
+    
+            if($request->hasFile('files')) {
+                foreach($request->file('files') as $image)
+                {
+                    Storage::disk('local')->put($old_directory, $image);
+                }
+            }
+    
+            if($old_directory !== $new_directory)
+            {
+                Storage::rename($old_directory, $new_directory);
+                $spot->images = $spot->id.'-'.$request->images;
+                $spot->save();
+            }
+    
+    
+            return response()->json([
+                'status' => 201
+            ], 201);            
+        });
     }
 }

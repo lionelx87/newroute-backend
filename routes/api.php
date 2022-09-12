@@ -32,6 +32,8 @@ Route::delete('/spots/{spot}', [ SpotController::class, 'destroy' ])->middleware
 
 Route::post('/spots', [ SpotController::class, 'store' ])->middleware('auth:sanctum,creator');
 
+Route::put('/spots/{spot}', [ SpotController::class, 'update' ])->middleware('auth:sanctum,creator');
+
 Route::get('/categories', [ CategoryController::class, 'index' ]);
 
 Route::get('/categories/{category}', [CategoryController::class, 'show']);

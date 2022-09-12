@@ -63,7 +63,10 @@ class Spot extends Model
     public function getDiffForHumansAttribute($value)
     {
         Carbon::setlocale(request('lang') ?? 'es');
-        return Carbon::parse($this->pivot->created_at)->diffForHumans();
+        if(!empty($this->pivot->created_at))
+        {
+            return Carbon::parse($this->pivot->created_at)->diffForHumans();
+        }
     }
 
 }

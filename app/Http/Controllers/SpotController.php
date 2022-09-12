@@ -8,6 +8,7 @@ use App\Models\Spot;
 use App\Models\Recommendation;
 use App\Services\SpotService;
 use App\Http\Requests\StoreSpotRequest;
+use App\Http\Requests\UpdateSpotRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -35,6 +36,11 @@ class SpotController extends Controller
     public function store(StoreSpotRequest $request)
     {
         return $this->spot_service->store( $request );
+    }
+
+    public function update(UpdateSpotRequest $request, Spot $spot)
+    {
+        return $this->spot_service->update( $request, $spot );
     }
 
     public function destroy(Spot $spot)
