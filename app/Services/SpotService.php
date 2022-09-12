@@ -108,4 +108,42 @@ class SpotService
             'status' => 201
         ], 201);
     }
+
+    public function update($request, $spot)
+    {
+        $spot->update([
+            'name_es' => $request->name_es,
+            'description_es' => $request->description_es,
+            'name_en' => $request->name_en,
+            'description_en' => $request->description_en,
+            'address' => $request->address,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'category_id' => $request->category_id
+        ]);
+
+        $phones = strlen($request->phones) > 0 ? array_map('trim', explode(",", $request->phones)) : [];
+
+        Phone::where('spot_id', $spot->id)->delete();
+
+        foreach ($phones as $phone) {
+            Phone::create([
+                'spot_id' => $spot->id,
+                'number' => $phone
+            ]);
+        }
+
+        Storage::delete(Storage::allFiles('public/'.$spot->images));
+
+        if($request->hasFile('files')) {
+            foreach($request->file('files') as $image)
+            {
+                Storage::disk('local')->put('public/'.$spot->images, $image);
+            }
+        }
+
+        return response()->json([
+            'status' => 201
+        ], 201);
+    }
 }
