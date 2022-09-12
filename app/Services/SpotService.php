@@ -95,6 +95,9 @@ class SpotService
             ]);
         }
 
+        $spot->images = $spot->id.'-'.$request->images;
+        $spot->save();
+
         Storage::disk('local')->makeDirectory('public/'.$spot->images);
 
         if($request->hasFile('files')) {
@@ -141,6 +144,14 @@ class SpotService
                 Storage::disk('local')->put('public/'.$spot->images, $image);
             }
         }
+
+        if('public/'.$spot->images !== 'public/'.$spot->id.'-'.$request->images)
+        {
+            Storage::rename('public/'.$spot->images, 'public/'.$spot->id.'-'.$request->images);
+            $spot->images = $spot->id.'-'.$request->images;
+            $spot->save();
+        }
+
 
         return response()->json([
             'status' => 201
